@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      //   var cartItemCounter = document.querySelector("span.cart-item-count");
+      //   jQuery.ajax("/products").done(function (data) {
+      //     console.log(data);
+      //   });
+
+      var cartItemCounter = document.querySelector("span.cart-item-count");
+      jQuery.ajax("/products").done(function (data) {
+        console.log(data);
+        var content;
+        $.each(data, function (i, item) {
+          console.log(item);
+          content +=
+            '<div class="card" style="width: 18rem;">' +
+            item.id +
+            '<img src="..." class="card-img-top" alt="..." />' +
+            '<div class="card-body"' +
+            ' <h5 class="card-title">Card title</h5>' +
+            +'<p class="card-text">' +
+            "Some quick example text to build on the card title and make up the bulk of the card's content.</p>" +
+            ' <a href="#" class="btn btn-primary">Go somewhere</a></div></div>';
+        });
+        document.querySelector(".container").innerHTML = content;
+      });
+    </script>
+  </body>
+</html>
