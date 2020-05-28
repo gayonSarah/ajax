@@ -17,48 +17,58 @@
     />
   </head>
   <body>
-    <div class="container">
-      <!--<div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>-->
-    </div>
+    <div class="container"></div>
     <script>
-      //   var cartItemCounter = document.querySelector("span.cart-item-count");
-      //   jQuery.ajax("/products").done(function (data) {
-      //     console.log(data);
-      //   });
-
       var cartItemCounter = document.querySelector("span.cart-item-count");
       jQuery.ajax("/products").done(function (data) {
         console.log(data);
         var content;
+        var option;
         $.each(data.products, function (i, item) {
-          console.log(item);
+          // console.log(item);
           content +=
-            '<div class="card" style="width: 18rem;">' +
-            item.id +
+            '<div class="card" style="width: 30rem; ">' +
             '<img src="' +
-            item.image +
-            '" class="card-img-top" alt="..." />' +
+            item.image.src +
+            ' class="card-img-top" alt="..." style="width: 17rem;"/>' +
             '<div class="card-body"' +
             ' <h5 class="card-title">' +
             item.title +
-            "</h5>" +
-            +'<p class="card-text">' +
-            +item.vendor +
-            ".</p>" +
-            ' <a href="#" class="btn btn-primary">Go somewhere</a></div></div>';
+            "</h5><br>" +
+            +'<p class="card-text text-align-center">' +
+            item.body_html +
+            ".</p>";
+          option = "<div>";
+          $.each(item.variants, function (i, item) {
+            // console.log(item);
+            option +=
+              '<button type="bouton" class="btn btn-info m-1" onclick="sendData(' +
+              item.id +
+              ')">' +
+              item.title +
+              "</button>";
+          });
+          option +=
+            "</div>" + ' <a href="#" class="btn btn-primary">Acheter</a></div>';
         });
-        document.querySelector(".container").innerHTML = content;
+        document.querySelector(".container").innerHTML = content + option;
       });
+
+      function sendData(id) {
+        var idVariante = id;
+        $.post("/order", {
+          order: {
+            email: "email10+TEST@gmail.com",
+            line_items: [
+              {
+                variant_id: 34476457590933,
+                quantity: 1,
+              },
+            ],
+          },
+        });
+        console.log(idVariante);
+      }
     </script>
   </body>
 </html>
