@@ -20,7 +20,7 @@
     <div class="container"></div>
     <script>
       var cartItemCounter = document.querySelector("span.cart-item-count");
-      jQuery.ajax("/products").done(function (data) {
+      $.ajax("/products").done(function (data) {
         console.log(data);
         var content;
         var option;
@@ -53,22 +53,101 @@
         });
         document.querySelector(".container").innerHTML = content + option;
       });
+      
+    //  function sendData(id) {
+    //   var id = id;
+    //   //var quantity;
+    //    var order= {};// =  {
+    //   //     "line_items": [
+    //   //       {
+    //   //         "variant_id": id,
+    //   //         "quantity": 1,
+    //   //       }
+    //   //     ],
+    //   // };
+
+    //   $.ajax({
+    //   url:"/order",
+    //   type: "POST",
+    //   data: order =  {
+    //       "line_items": [
+    //         {
+    //           "variant_id": id,
+    //           "quantity": 1,
+    //         }
+    //       ],
+    //   },
+    //   dataType:"json",
+    //   error: function(){
+    //     alert('error saving order');
+    //   }
+    // })
+
+
+    //   // var order ;
+    //   // jQuery.post("/order", {
+    //   //   order: {
+    //   //     line_items: [
+    //   //       {
+    //   //         variant_id: id,
+    //   //         quantity: 1,
+    //   //       }
+    //   //     ],
+    //   //   }
+    //   // });
+      
+    //   // $.ajax({
+    //   //   type: 'POST',
+    //   //   url:'/order',
+    //   //   data: order,
+    //   //   error: function(){
+    //   //     alert('error saving order');
+    //   //   }
+    //   // })
+    //   console.log(id);
+    //   };
 
       function sendData(id) {
-        var idVariante = id;
-        $.post("/order", {
-          order: {
-            email: "email10+TEST@gmail.com",
-            line_items: [
-              {
-                variant_id: 34476457590933,
-                quantity: 1,
-              },
-            ],
-          },
-        });
-        console.log(idVariante);
+      var id = id;
+      var order= {};
+
+      $.ajax({
+      url:"/order",
+      type: "POST",
+      data: order =  {
+          "line_items": [
+            {
+              "variant_id": id,
+              "quantity": 1
+            }
+          ],
+      },
+      dataType:"json",
+      success:function(){
+        alert('OK');
+      },
+      error: function(){
+        alert('error saving order');
       }
+    });
+
+      console.log(id);
+      };
+
+      // function sendData(id) {
+      //   var idVariante = id;
+      //   jQuery.post("/order", {
+      //     order: {
+      //       line_items: [
+      //         {
+      //           variant_id: 34476457787541,
+      //           quantity: 1
+      //         }
+      //       ]
+      //     }
+      //   });
+      //   console.log(idVariante);
+      // }
     </script>
   </body>
 </html>
