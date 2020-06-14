@@ -9,21 +9,34 @@
       integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
       crossorigin="anonymous"
     ></script>
+   
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
+
+    
   </head>
   <body>
-    <div class="container"></div>
+
+      <div class="caddy pt-2">
+          <button class="plus btn btn-primary">+</button>
+          <button class="moins btn btn-primary">-</button>
+          <input type="text" class="quantity">
+        </div>
+    <div class="container"></div>  
     <script>
       var cartItemCounter = document.querySelector("span.cart-item-count");
       $.ajax("/products").done(function (data) {
         console.log(data);
         var content;
         var option;
+        var qty =0;
+        var element =  document.querySelector(".quantity");
+        element.value = qty;
+        
         $.each(data.products, function (i, item) {
           // console.log(item);
           content +=
@@ -40,72 +53,26 @@
             ".</p>";
           option = "<div>";
           $.each(item.variants, function (i, item) {
-            // console.log(item);
             option +=
-              '<button type="bouton" class="btn btn-info m-1" onclick="sendData(' +
+            '<button type="bouton" class="btn btn-info m-1" onclick="sendData(' +
               item.id +
-              ')">' +
-              item.title +
-              "</button>";
-          });
+              ')">' +        
+               item.title +
+              "</button>";                            
+            });
           option +=
             "</div>" + ' <a href="#" class="btn btn-primary">Acheter</a></div>';
         });
+      //ecouteur sur le bouton plus
+      document.querySelector(".plus").addEventListener("click",function(){                
+        element.value = qty ++;                
+      }); 
+      document.querySelector(".moins").addEventListener("click",function(){          
+        element.value = qty --;
+      });
+         
         document.querySelector(".container").innerHTML = content + option;
       });
-      
-    //  function sendData(id) {
-    //   var id = id;
-    //   //var quantity;
-    //    var order= {};// =  {
-    //   //     "line_items": [
-    //   //       {
-    //   //         "variant_id": id,
-    //   //         "quantity": 1,
-    //   //       }
-    //   //     ],
-    //   // };
-
-    //   $.ajax({
-    //   url:"/order",
-    //   type: "POST",
-    //   data: order =  {
-    //       "line_items": [
-    //         {
-    //           "variant_id": id,
-    //           "quantity": 1,
-    //         }
-    //       ],
-    //   },
-    //   dataType:"json",
-    //   error: function(){
-    //     alert('error saving order');
-    //   }
-    // })
-
-
-    //   // var order ;
-    //   // jQuery.post("/order", {
-    //   //   order: {
-    //   //     line_items: [
-    //   //       {
-    //   //         variant_id: id,
-    //   //         quantity: 1,
-    //   //       }
-    //   //     ],
-    //   //   }
-    //   // });
-      
-    //   // $.ajax({
-    //   //   type: 'POST',
-    //   //   url:'/order',
-    //   //   data: order,
-    //   //   error: function(){
-    //   //     alert('error saving order');
-    //   //   }
-    //   // })
-    //   console.log(id);
-    //   };
 
       function sendData(id) {
       var id = id;
@@ -130,24 +97,7 @@
         alert('error saving order');
       }
     });
-
-      console.log(id);
       };
-
-      // function sendData(id) {
-      //   var idVariante = id;
-      //   jQuery.post("/order", {
-      //     order: {
-      //       line_items: [
-      //         {
-      //           variant_id: 34476457787541,
-      //           quantity: 1
-      //         }
-      //       ]
-      //     }
-      //   });
-      //   console.log(idVariante);
-      // }
     </script>
   </body>
 </html>
